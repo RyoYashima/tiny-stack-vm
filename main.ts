@@ -1,27 +1,4 @@
-f=require('fs');E=process.env;I=E.MAKEFUN_INPUT_DIR||'/input';O=E.MAKEFUN_OUTPUT_DIR||'/output'
-S="0Aq46:;?        999999959995999 999             PTTP0           58              4414"
-R=_=>{for(p=t=0;;){if(t++>=1e6)return 10;if(p<0||p>=n)return 9;c=P[p];v=S.charCodeAt(c)-48;if(!(v>=0))return 5
-x=p+1+(v>>4);u=v>>2&3;if(x>n)return 9;if(s<u)return 2;if(s-u+(v&3)>256)return 3;p=x;b=D[s-1];a=D[s-2]
-if(v==9){if(c>18&&c<23&&!b)return 4;D[s-2]=[a+b,a-b,Math.imul(a,b),a/b,a%b,(a>>>0)/(b>>>0),(a>>>0)%(b>>>0),,a&b,a|b,a^b,,a<<b,a>>b,a>>>b,,a==b,a<b,a>>>0<b>>>0][c-16];s--}
-if(!c)return 0
-if(c==1)D[s++]=P[p-1]<<24>>24
-if(c==2)D[s++]=P.readInt32LE(p-4)
-if(c==3)s--
-if(c==4)D[s++]=b
-if(c==5)D[s-1]=a,D[s-2]=b
-if(c==6)D[s++]=a
-if(c==7)D[s-1]=D[s-3],D[s-3]=a,D[s-2]=b
-if(c==23)D[s-1]=-b
-if(c==27)D[s-1]=~b
-if(c>47&&c<51&&(c==48||(c&1?!D[--s]:D[--s])))p=x+P.readInt16LE(x-2)
-if(c==51){if(C.length>63)return 7;C.push(x);p=P.readUInt16LE(x-2)}
-if(c==52){if(!C.length)return 8;p=C.pop()}
-if(c>63&&c<66&&b>>>0>255)return 6
-if(c==64)D[s-1]=M[b]
-if(c==65)M[b]=a,s-=2
-if(c>79&&c<82){q=Buffer.from(c&1?[b]:''+b);if(k+q.length>65536)return 11;o.push(q);k+=q.length;s--}
-if(c==82)D[s++]=N[j++]??-1
-if(c==83)return b&255}}
-for(d of f.readdirSync(I)){P=f.readFileSync(I+'/'+d+'/program.bin');N=f.readFileSync(I+'/'+d+'/input.bin');n=P.length
-D=new Int32Array(257);M=new Int32Array(256);C=[];o=[];k=s=j=0;e=R();f.mkdirSync(w=O+'/'+d,{recursive:true})
-f.writeFileSync(w+'/stdout.bin',Buffer.concat(o));f.writeFileSync(w+'/exit.txt',''+e)}
+f=require('fs');E=process.env;O=E.MAKEFUN_OUTPUT_DIR||'/output';process.chdir(E.MAKEFUN_INPUT_DIR||'/input')
+for(d of f.readdirSync('.')){P=f.readFileSync(d+'/program.bin');N=f.readFileSync(d+'/input.bin');D=new Int32Array(256);M=[];C=[];o='';s=j=p=t=0
+for(z=-1;z<0;)c=P[p],v="0Aq46:;?        999999959995999 999             PTTP0           58              4414".charCodeAt(c)-48,u=v>>2&3,x=p-~(v>>4),b=D[s-1],a=D[s-2],t++>=1e6?z=10:p<0|x>P.length?z=9:!(v>=0)?z=5:s<u?z=2:s-u+(v&3)>256?z=3:(p=x,v==9?c>18&c<23&!b?z=4:D[--s-1]=[a+b,a-b,Math.imul(a,b),a/b,a%b,(A=a>>>0)/(B=b>>>0),A%B,,a&b,a|b,a^b,,a<<b,a>>b,a>>>b,,a==b,a<b,A<B][c-16]:c<1?z=0:c<3?D[s++]=c<2?P[p-1]<<24>>24:P.readInt32LE(p-4):c<4?s--:c<5?D[s++]=b:c<6?D.set([b,a],s-2):c<7?D[s++]=a:c<8?D.set([a,b,D[s-3]],s-3):c<28?D[s-1]=c<24?-b:~b:c<51?(c<49||!D[--s]==c%2)&&(p=x+P.readInt16LE(x-2)):c<52?C[63]?z=7:p=P.readUInt16LE(x-2,C.push(x)):c<53?C[0]?p=C.pop():z=8:c<66?b>>>0>255?z=6:c<65?D[s-1]=M[b]:(s-=2,M[b]=a):c<82?(q=c&1?String.fromCharCode(b):b+'',o+q).length>65536?z=11:(o+=q,s--):c<83?D[s++]=N[j++]??-1:z=b&255)
+f.mkdirSync(w=O+'/'+d);f.writeFileSync(w+'/stdout.bin',o,'latin1');f.writeFileSync(w+'/exit.txt',z+'')}
